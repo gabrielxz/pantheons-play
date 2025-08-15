@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { motion } from 'framer-motion'
@@ -33,7 +32,7 @@ export function NewsletterSection() {
           setMessage('')
         }, 5000)
       }, 1000)
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Something went wrong. Please try again.')
       setTimeout(() => {

@@ -73,7 +73,7 @@ export default function Home() {
                 </h2>
                 
                 <p className="text-lg text-purple-100/80 max-w-3xl mx-auto mb-10 leading-relaxed">
-                  As a new organization, our journey of giving back is just beginning. We're building the foundation 
+                  As a new organization, our journey of giving back is just beginning. We&apos;re building the foundation 
                   to support amazing local causes in Charlotte with every event we host. Watch this space as our 
                   fellowship grows and we begin making a real impact together.
                 </p>
@@ -108,7 +108,7 @@ export default function Home() {
                 Get in Touch
               </h2>
               <p className="text-slate-300 mb-8">
-                Have questions about our events? Want to partner with us? We'd love to hear from you.
+                Have questions about our events? Want to partner with us? We&apos;d love to hear from you.
               </p>
               <a
                 href={`mailto:${SITE_CONFIG.email}`}
