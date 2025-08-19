@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
   name: 'Pantheons Play',
   description: 'Challenge Your Mind. Find Your People.',
   tagline: 'Pantheons Play is a series of game days in Charlotte where we use the magic of tabletop games to have serious fun, build a vibrant community, and explore big ideas together.',
-  email: 'hello@pantheonsplay.com',
+  email: 'contact@pantheonsplay.com',
   social: {
     twitter: '@pantheonsplay',
     instagram: '@pantheonsplay',
@@ -12,9 +12,10 @@ export const SITE_CONFIG = {
 
 export const EVENT_CONFIG = {
   title: 'Pantheons Play: Winter Gathering',
-  date: 'December 2025', // Update when confirmed
+  date: 'December 6th, 12pm - 6pm',
   time: 'TBD',
   location: 'VisArt, Charlotte, NC',
+  locationUrl: 'https://maps.app.goo.gl/B9W854gMNyqM52u19',
   ctaLabel: 'Join the Next Event',
   registrationUrl: '#', // Replace with actual registration link
 }
@@ -28,7 +29,7 @@ export const IMAGE_PATHS = {
 
 export const NAVIGATION_ITEMS = [
   { label: 'Next Event', href: '#event' },
-  { label: 'Our Values', href: '#event' },
+  { label: 'Our Values', href: '#values' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#contact' },
 ] as const

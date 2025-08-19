@@ -82,14 +82,11 @@ export default function Home() {
                 <div className="inline-block">
                   <div className="bg-gradient-to-br from-purple-500/20 to-amber-500/20 backdrop-blur-sm rounded-2xl border border-purple-400/40 p-8">
                     <p className="text-sm uppercase tracking-wider text-purple-300 mb-3 font-semibold">
-                      Total Raised for Local Charities
+                      Total Raised for Local Organizations
                     </p>
                     <div className="text-5xl font-bold bg-gradient-to-r from-purple-300 to-amber-300 bg-clip-text text-transparent">
-                      $0
+                      $0.0 Billion Dollars
                     </div>
-                    <p className="text-xs text-purple-200/60 mt-3">
-                      Our impact journey starts with you
-                    </p>
                   </div>
                 </div>
               </div>

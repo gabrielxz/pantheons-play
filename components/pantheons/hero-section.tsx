@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 export function HeroSection() {
   return (
-    <section id="event" className="relative overflow-hidden pt-20 pb-16">
+    <section className="relative overflow-hidden pt-20 pb-16">
       {/* Background glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-transparent" />
       
@@ -39,10 +39,11 @@ export function HeroSection() {
 
         {/* Section 2: Our Values */}
         <motion.div
+          id="values"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mb-16"
+          className="mb-16 scroll-mt-20"
         >
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -57,10 +58,11 @@ export function HeroSection() {
 
         {/* Section 3: Our Next Gathering */}
         <motion.div
+          id="event"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-5xl mx-auto scroll-mt-20"
         >
           {/* Event announcement with refined styling */}
           <div className="relative bg-gradient-to-br from-amber-900/20 via-amber-950/30 to-slate-900/40 backdrop-blur-sm rounded-3xl border-2 border-amber-400/30 p-8 md:p-12 shadow-2xl">
@@ -87,7 +89,14 @@ export function HeroSection() {
                   </div>
                   <div className="flex items-center gap-3 text-amber-100/90 justify-center md:justify-start">
                     <MapPin className="h-5 w-5 text-amber-400" />
-                    <span className="font-medium">{EVENT_CONFIG.location}</span>
+                    <Link 
+                      href={EVENT_CONFIG.locationUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="font-medium hover:text-amber-300 transition-colors underline decoration-amber-400/30 hover:decoration-amber-400/60"
+                    >
+                      {EVENT_CONFIG.location}
+                    </Link>
                   </div>
                 </div>
 
@@ -111,7 +120,7 @@ export function HeroSection() {
                   <div className="flex items-start gap-3 group">
                     <div className="mt-1.5 w-2 h-2 rotate-45 bg-amber-400 group-hover:scale-125 transition-transform flex-shrink-0" />
                     <p className="text-amber-100/80">
-                      <span className="font-semibold">LIVE on Twitch:</span> A conversation with Universe Girl & Science Girl about the intersection of games and discovery.
+                      <span className="font-semibold">LIVE on Twitch:</span> Universe Girl & Science Girl perform a live episode of their podcast!
                     </p>
                   </div>
                   
@@ -125,7 +134,7 @@ export function HeroSection() {
                   <div className="flex items-start gap-3 group">
                     <div className="mt-1.5 w-2 h-2 rotate-45 bg-purple-400 group-hover:scale-125 transition-transform flex-shrink-0" />
                     <p className="text-amber-100/80">
-                      Community raffles with awesome, locally-sourced prizes and unique collectibles.
+                      A unique 'Find the Golden Ticket' challenge and awesome raffles.
                     </p>
                   </div>
                   

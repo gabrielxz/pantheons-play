@@ -14,24 +14,31 @@ export function NewsletterSection() {
     e.preventDefault()
     setStatus('loading')
     
-    // Simulate API call - replace with your actual newsletter service
     try {
-      // await fetch('/api/newsletter', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email })
-      // })
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
       
-      // Simulated success
-      setTimeout(() => {
+      const data = await response.json()
+      
+      if (response.ok) {
         setStatus('success')
-        setMessage('Welcome to the community! Check your email for confirmation.')
+        setMessage(data.message || 'Welcome to the community! Check your email for confirmation.')
         setEmail('')
         setTimeout(() => {
           setStatus('idle')
           setMessage('')
         }, 5000)
-      }, 1000)
+      } else {
+        setStatus('error')
+        setMessage(data.error || 'Something went wrong. Please try again.')
+        setTimeout(() => {
+          setStatus('idle')
+          setMessage('')
+        }, 5000)
+      }
     } catch {
       setStatus('error')
       setMessage('Something went wrong. Please try again.')
