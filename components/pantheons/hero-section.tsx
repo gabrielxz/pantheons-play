@@ -134,7 +134,7 @@ export function HeroSection() {
                   <div className="flex items-start gap-3 group">
                     <div className="mt-1.5 w-2 h-2 rotate-45 bg-purple-400 group-hover:scale-125 transition-transform flex-shrink-0" />
                     <p className="text-amber-100/80">
-                      A unique 'Find the Golden Ticket' challenge and awesome raffles.
+                      A unique &apos;Find the Golden Ticket&apos; challenge and awesome raffles.
                     </p>
                   </div>
                   
