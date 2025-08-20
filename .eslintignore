@@ -1,0 +1,15 @@
+# Ignore Lambda function directory
+amplify-lambda/
+
+# Build outputs
+.next/
+out/
+dist/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.production

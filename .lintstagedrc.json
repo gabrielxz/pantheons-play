@@ -1,8 +1,8 @@
 {
-  "*.{js,jsx,ts,tsx}": [
+  "!(amplify-lambda)/**/*.{js,jsx,ts,tsx}": [
     "eslint --fix --max-warnings 0"
   ],
-  "*.{ts,tsx}": [
+  "!(amplify-lambda)/**/*.{ts,tsx}": [
     "bash -c 'npx tsc --noEmit'"
   ]
 }

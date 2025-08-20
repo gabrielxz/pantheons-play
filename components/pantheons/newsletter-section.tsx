@@ -14,15 +14,12 @@ export function NewsletterSection() {
     e.preventDefault()
     setStatus('loading')
     
-    // You need to get these values from your MailChimp embedded form
-    // Go to: Audience → Signup forms → Embedded forms
-    // Look in the form HTML for the action URL which contains these values
-    const MAILCHIMP_U = process.env.NEXT_PUBLIC_MAILCHIMP_U || ''
-    const MAILCHIMP_ID = process.env.NEXT_PUBLIC_MAILCHIMP_ID || ''
-    const MAILCHIMP_SERVER = process.env.NEXT_PUBLIC_MAILCHIMP_SERVER || ''
+    // Get the API endpoint from environment variable
+    // This should be your API Gateway endpoint
+    const API_ENDPOINT = process.env.NEXT_PUBLIC_NEWSLETTER_API_URL
     
-    if (!MAILCHIMP_U || !MAILCHIMP_ID || !MAILCHIMP_SERVER) {
-      // Fallback to mailto if MailChimp not configured
+    if (!API_ENDPOINT) {
+      // Fallback to mailto if API endpoint not configured
       window.location.href = `mailto:contact@pantheonsplay.com?subject=Newsletter Signup&body=Please add my email to the newsletter: ${email}`
       setStatus('success')
       setMessage('Thank you! We\'ll add you to our newsletter.')
@@ -35,68 +32,34 @@ export function NewsletterSection() {
     }
 
     try {
-      // Use JSONP for cross-origin requests to MailChimp
-      const url = `https://${MAILCHIMP_SERVER}.list-manage.com/subscribe/post-json?u=${MAILCHIMP_U}&id=${MAILCHIMP_ID}&EMAIL=${encodeURIComponent(email)}&c=?`
+      const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      })
       
-      // Create a script tag for JSONP
-      const script = document.createElement('script')
-      script.src = url.replace('c=?', `c=handleMailChimpResponse_${Date.now()}`)
+      const data = await response.json()
       
-      // Define the callback function
-      const callbackName = `handleMailChimpResponse_${Date.now()}`
-      
-      interface MailChimpResponse {
-        result: 'success' | 'error'
-        msg?: string
-      }
-      
-      ;(window as unknown as Record<string, unknown>)[callbackName] = (data: MailChimpResponse) => {
-        // Clean up
-        delete (window as unknown as Record<string, unknown>)[callbackName]
-        document.body.removeChild(script)
-        
-        if (data.result === 'success') {
-          setStatus('success')
-          setMessage('Please check your email to confirm your subscription!')
-          setEmail('')
-        } else {
-          setStatus('error')
-          // Parse MailChimp error messages
-          let errorMsg = 'Something went wrong. Please try again.'
-          if (data.msg) {
-            if (data.msg.includes('already subscribed')) {
-              errorMsg = 'You are already subscribed!'
-            } else if (data.msg.includes('invalid')) {
-              errorMsg = 'Please enter a valid email address.'
-            }
-          }
-          setMessage(errorMsg)
-        }
-        
+      if (response.ok) {
+        setStatus('success')
+        setMessage(data.message || 'Welcome to the community! Check your email for confirmation.')
+        setEmail('')
         setTimeout(() => {
           setStatus('idle')
           setMessage('')
         }, 5000)
-      }
-      
-      // Timeout handling
-      setTimeout(() => {
-        delete (window as unknown as Record<string, unknown>)[callbackName]
-        if (document.body.contains(script)) {
-          document.body.removeChild(script)
-        }
+      } else {
         setStatus('error')
-        setMessage('Request timed out. Please try again.')
+        setMessage(data.error || 'Something went wrong. Please try again.')
         setTimeout(() => {
           setStatus('idle')
           setMessage('')
         }, 5000)
-      }, 10000)
-      
-      // Append script to trigger the request
-      document.body.appendChild(script)
-      
-    } catch {
+      }
+    } catch (error) {
+      console.error('Newsletter signup error:', error)
       setStatus('error')
       setMessage('Something went wrong. Please try again.')
       setTimeout(() => {

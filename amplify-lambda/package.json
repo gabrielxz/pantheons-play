@@ -1,0 +1,15 @@
+{
+  "name": "pantheons-newsletter-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for Pantheons Play newsletter signup",
+  "main": "index.js",
+  "scripts": {
+    "zip": "zip -r function.zip index.js package.json",
+    "deploy": "bash deploy.sh"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "",
+  "license": "MIT"
+}
