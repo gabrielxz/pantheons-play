@@ -44,9 +44,15 @@ export function NewsletterSection() {
       
       // Define the callback function
       const callbackName = `handleMailChimpResponse_${Date.now()}`
-      ;(window as any)[callbackName] = (data: any) => {
+      
+      interface MailChimpResponse {
+        result: 'success' | 'error'
+        msg?: string
+      }
+      
+      ;(window as unknown as Record<string, unknown>)[callbackName] = (data: MailChimpResponse) => {
         // Clean up
-        delete (window as any)[callbackName]
+        delete (window as unknown as Record<string, unknown>)[callbackName]
         document.body.removeChild(script)
         
         if (data.result === 'success') {
@@ -74,8 +80,8 @@ export function NewsletterSection() {
       }
       
       // Timeout handling
-      const timeout = setTimeout(() => {
-        delete (window as any)[callbackName]
+      setTimeout(() => {
+        delete (window as unknown as Record<string, unknown>)[callbackName]
         if (document.body.contains(script)) {
           document.body.removeChild(script)
         }
