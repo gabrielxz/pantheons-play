@@ -17,7 +17,7 @@ export const EVENT_CONFIG = {
   location: 'VisArt, Charlotte, NC',
   locationUrl: 'https://maps.app.goo.gl/B9W854gMNyqM52u19',
   ctaLabel: 'Join the Next Event',
-  registrationUrl: '#', // Replace with actual registration link
+  registrationUrl: 'https://lu.ma/event/evt-Yxjn5BdqBFFnsXB',
 }
 
 export const IMAGE_PATHS = {

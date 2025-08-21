@@ -102,13 +102,17 @@ export function HeroSection() {
 
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-bold group w-full md:w-auto shadow-lg"
+                  className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-bold group w-full md:w-auto shadow-lg luma-checkout--button"
                   asChild
                 >
-                  <Link href={EVENT_CONFIG.registrationUrl}>
+                  <a
+                    href={EVENT_CONFIG.registrationUrl}
+                    data-luma-action="checkout"
+                    data-luma-event-id="evt-Yxjn5BdqBFFnsXB"
+                  >
                     Secure Your Seat at the Table
                     <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  </a>
                 </Button>
               </div>
 

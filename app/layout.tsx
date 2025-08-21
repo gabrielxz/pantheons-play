@@ -36,6 +36,13 @@ export default function RootLayout({
       >
         {children}
         
+        {/* Luma Checkout */}
+        <Script 
+          id="luma-checkout" 
+          src="https://embed.lu.ma/checkout-button.js"
+          strategy="afterInteractive"
+        />
+        
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-ZND6CG33GF"
