@@ -138,7 +138,7 @@ export function HeroSection() {
                   <div className="flex items-start gap-3 group">
                     <div className="mt-1.5 w-2 h-2 rotate-45 bg-purple-400 group-hover:scale-125 transition-transform flex-shrink-0" />
                     <p className="text-amber-100/80">
-                      A unique &apos;Find mythology-themed Charon&apos;s Coin&apos; challenge.
+                      A unique mythology-themed challenge with &apos;Charon&apos;s Coin&apos;
                     </p>
                   </div>
                   
