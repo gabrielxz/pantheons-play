@@ -110,7 +110,7 @@ export function HeroSection() {
                     data-luma-action="checkout"
                     data-luma-event-id="evt-Yxjn5BdqBFFnsXB"
                   >
-                    Secure Your Seat at the Table
+                    Reserve Tickets
                     <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
