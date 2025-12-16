@@ -7,6 +7,7 @@ import { HeroSection } from '@/components/pantheons/hero-section'
 import { NewsletterSection } from '@/components/pantheons/newsletter-section'
 import { Starfield } from '@/components/pantheons/starfield'
 import { SectionDivider } from '@/components/pantheons/section-divider'
+import { EventGallery } from '@/components/pantheons/event-gallery'
 import { SITE_CONFIG } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -37,21 +38,8 @@ export default function Home() {
                 Memories from our previous gatherings. Join us to create new ones!
               </p>
             </div>
-            
-            {/* Placeholder for gallery - you can replace with actual images */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[...Array(8)].map((_, i) => (
-                <div
-                  key={i}
-                  className="aspect-square rounded-xl bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center p-4 relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-amber-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <p className="text-center text-sm font-medium text-slate-400 group-hover:text-slate-300 transition-colors">
-                    Past Event Still in the Future
-                  </p>
-                </div>
-              ))}
-            </div>
+
+            <EventGallery />
           </div>
         </section>
 
