@@ -7,7 +7,7 @@ import { HeroSection } from '@/components/pantheons/hero-section'
 import { NewsletterSection } from '@/components/pantheons/newsletter-section'
 import { Starfield } from '@/components/pantheons/starfield'
 import { SectionDivider } from '@/components/pantheons/section-divider'
-import { EventGallery } from '@/components/pantheons/event-gallery'
+import { EventsSection } from '@/components/pantheons/events-section'
 import { SITE_CONFIG } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -24,24 +24,8 @@ export default function Home() {
       <main>
         <HeroSection />
         
-        {/* Divider */}
-        <SectionDivider variant="sparkles-swords" />
-
-        {/* Gallery Section */}
-        <section id="gallery" className="relative py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Past Events Gallery
-              </h2>
-              <p className="text-slate-400 max-w-2xl mx-auto">
-                Memories from our previous gatherings. Join us to create new ones!
-              </p>
-            </div>
-
-            <EventGallery />
-          </div>
-        </section>
+        {/* Past Events and Gallery Sections */}
+        <EventsSection />
 
         {/* Divider */}
         <SectionDivider variant="single-trophy" />
@@ -55,28 +39,34 @@ export default function Home() {
               <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-purple-400/40"></div>
               <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-purple-400/40"></div>
               <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-purple-400/40"></div>
-              
+
               <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent mb-8">
                   Sharing the Win: Our Community Impact
                 </h2>
-                
-                <p className="text-lg text-purple-100/80 max-w-3xl mx-auto mb-10 leading-relaxed">
-                  As a new organization, our journey of giving back is just beginning. We&apos;re building the foundation 
-                  to support amazing local causes in Charlotte with every event we host. Watch this space as our 
-                  fellowship grows and we begin making a real impact together.
-                </p>
-                
+
                 {/* Donation Tracker */}
-                <div className="inline-block">
+                <div className="inline-block mb-10">
                   <div className="bg-gradient-to-br from-purple-500/20 to-amber-500/20 backdrop-blur-sm rounded-2xl border border-purple-400/40 p-8">
                     <p className="text-sm uppercase tracking-wider text-purple-300 mb-3 font-semibold">
                       Total Raised for Local Organizations
                     </p>
                     <div className="text-5xl font-bold bg-gradient-to-r from-purple-300 to-amber-300 bg-clip-text text-transparent">
-                      $0.0 Billion Dollars
+                      $0.000000075 Billion Dollars
                     </div>
                   </div>
+                </div>
+
+                <div className="max-w-3xl mx-auto space-y-6 text-lg text-purple-100/80 leading-relaxed">
+                  <p>
+                    Pantheons Play was built around a simple idea: if we&apos;re going to gather people to play and grow, we should also give something back. We list it in billions because it&apos;s funny and humbling, but we&apos;re serious about community and fundraising.
+                  </p>
+                  <p>
+                    The numbers are small. The ambitions are not. We&apos;re building a community that doesn&apos;t just play games and have good conversations, but also supports the people and places that make our city better.
+                  </p>
+                  <p className="text-purple-300 font-medium italic">
+                    This is the beginning of a longer arc.
+                  </p>
                 </div>
               </div>
             </div>

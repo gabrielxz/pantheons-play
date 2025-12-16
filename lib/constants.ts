@@ -10,14 +10,72 @@ export const SITE_CONFIG = {
   }
 }
 
+// Event types
+export interface PastEvent {
+  id: string
+  name: string
+  date: string
+  tagline: string
+  venue?: string
+  venueUrl?: string
+  photoFolder: string
+  photos: string[]
+}
+
+export interface UpcomingEvent {
+  name: string
+  date: string
+  location: string
+  locationUrl: string
+  registrationUrl: string
+  highlights: string[]
+}
+
+// Past events (newest first)
+export const PAST_EVENTS: PastEvent[] = [
+  {
+    id: 'winter-2025',
+    name: 'Winter Event',
+    date: 'December 2025',
+    tagline: 'We hosted our debut event at {venue}! Lots of open gaming and a talk on LLMs & humor.',
+    venue: 'VisArt Video',
+    venueUrl: 'https://visartvideo.org/',
+    photoFolder: '/images/events/winter-2025/optimized',
+    photos: [
+      'ppWinter9.jpg',
+      'ppWinter2.jpg',
+      'ppWinter13.jpg',
+      'ppWinter15.jpg',
+      'ppWinter17.jpg',
+      'ppWinter18.jpg',
+      'ppWinter5.jpg',
+      'ppWinter7.jpg',
+      'ppWinter1.jpg',
+      'ppWinter3.jpg',
+      'ppWinter4.jpg',
+      'ppWinter8.jpg',
+      'ppWinter10.jpg',
+      'ppWinter11.jpg',
+      'ppWinter12.jpg',
+      'ppWinter14.jpg',
+      'ppWinter16.jpg',
+      'ppWinter19.jpg',
+    ],
+  },
+]
+
+// Next upcoming event (null if none scheduled)
+export const NEXT_EVENT: UpcomingEvent | null = null
+
+// Legacy export for compatibility
 export const EVENT_CONFIG = {
-  title: 'Pantheons Play: Winter Gathering',
-  date: 'December 6th, 12pm - 6pm',
+  title: 'Coming Soon',
+  date: 'TBD',
   time: 'TBD',
-  location: 'VisArt, Charlotte, NC',
-  locationUrl: 'https://maps.app.goo.gl/B9W854gMNyqM52u19',
+  location: 'TBD',
+  locationUrl: '',
   ctaLabel: 'Join the Next Event',
-  registrationUrl: 'https://lu.ma/event/evt-Yxjn5BdqBFFnsXB',
+  registrationUrl: '',
 }
 
 export const IMAGE_PATHS = {
@@ -30,6 +88,7 @@ export const IMAGE_PATHS = {
 export const NAVIGATION_ITEMS = [
   { label: 'Next Event', href: '#event' },
   { label: 'Our Values', href: '#values' },
+  { label: 'Past Events', href: '#past-events' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#contact' },
 ] as const

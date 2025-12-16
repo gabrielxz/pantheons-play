@@ -5,7 +5,7 @@ import { CalendarDays, MapPin, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ImageTiles } from './image-tiles'
 import { SectionDivider } from './section-divider'
-import { SITE_CONFIG, EVENT_CONFIG } from '@/lib/constants'
+import { SITE_CONFIG, NEXT_EVENT } from '@/lib/constants'
 import Link from 'next/link'
 
 export function HeroSection() {
@@ -71,86 +71,83 @@ export function HeroSection() {
             <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-amber-400/40"></div>
             <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-amber-400/40"></div>
             <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-amber-400/40"></div>
-            
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              {/* Left side - Event details */}
-              <div className="text-center md:text-left">
-                <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-3">
+
+            {NEXT_EVENT ? (
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Left side - Event details */}
+                <div className="text-center md:text-left">
+                  <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-3">
+                    Our Next Gathering
+                  </h3>
+                  <p className="text-amber-100/80 mb-6 text-lg">
+                    Join us for a unique evening of play, conversation, and community.
+                  </p>
+
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center gap-3 text-amber-100/90 justify-center md:justify-start">
+                      <CalendarDays className="h-5 w-5 text-amber-400" />
+                      <span className="font-medium">{NEXT_EVENT.date}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-amber-100/90 justify-center md:justify-start">
+                      <MapPin className="h-5 w-5 text-amber-400" />
+                      <Link
+                        href={NEXT_EVENT.locationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium hover:text-amber-300 transition-colors underline decoration-amber-400/30 hover:decoration-amber-400/60"
+                      >
+                        {NEXT_EVENT.location}
+                      </Link>
+                    </div>
+                  </div>
+
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-bold group w-full md:w-auto shadow-lg luma-checkout--button"
+                    asChild
+                  >
+                    <a
+                      href={NEXT_EVENT.registrationUrl}
+                      data-luma-action="checkout"
+                      data-luma-event-id="evt-Yxjn5BdqBFFnsXB"
+                    >
+                      Reserve Tickets
+                      <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+
+                {/* Right side - Event highlights */}
+                <div className="order-first md:order-last">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-amber-400 mb-5">Event Highlights</h4>
+                    {NEXT_EVENT.highlights.map((highlight, index) => {
+                      const colors = ['bg-amber-400', 'bg-emerald-400', 'bg-purple-400', 'bg-cyan-400']
+                      return (
+                        <div key={index} className="flex items-start gap-3 group">
+                          <div className={`mt-1.5 w-2 h-2 rotate-45 ${colors[index % colors.length]} group-hover:scale-125 transition-transform flex-shrink-0`} />
+                          <p className="text-amber-100/80">{highlight}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Coming Soon state */
+              <div className="text-center py-8">
+                <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-4">
                   Our Next Gathering
                 </h3>
-                <p className="text-amber-100/80 mb-6 text-lg">
-                  Join us for a unique evening of play, conversation, and community.
+                <p className="text-amber-100/80 text-lg mb-6 max-w-xl mx-auto">
+                  We&apos;re planning something special. Sign up for our newsletter below to be the first to know when we announce our next event!
                 </p>
-                
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center gap-3 text-amber-100/90 justify-center md:justify-start">
-                    <CalendarDays className="h-5 w-5 text-amber-400" />
-                    <span className="font-medium">{EVENT_CONFIG.date}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-amber-100/90 justify-center md:justify-start">
-                    <MapPin className="h-5 w-5 text-amber-400" />
-                    <Link 
-                      href={EVENT_CONFIG.locationUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="font-medium hover:text-amber-300 transition-colors underline decoration-amber-400/30 hover:decoration-amber-400/60"
-                    >
-                      {EVENT_CONFIG.location}
-                    </Link>
-                  </div>
-                </div>
-
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-bold group w-full md:w-auto shadow-lg luma-checkout--button"
-                  asChild
-                >
-                  <a
-                    href={EVENT_CONFIG.registrationUrl}
-                    data-luma-action="checkout"
-                    data-luma-event-id="evt-Yxjn5BdqBFFnsXB"
-                  >
-                    Reserve Tickets
-                    <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </Button>
-              </div>
-
-              {/* Right side - Event highlights */}
-              <div className="order-first md:order-last">
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-amber-400 mb-5">Event Highlights</h4>
-                  
-                  <div className="flex items-start gap-3 group">
-                    <div className="mt-1.5 w-2 h-2 rotate-45 bg-amber-400 group-hover:scale-125 transition-transform flex-shrink-0" />
-                    <p className="text-amber-100/80">
-                      Universe & Science Girl Podcast: Carri & Shirin perform a live episode of their podcast.
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 group">
-                    <div className="mt-1.5 w-2 h-2 rotate-45 bg-emerald-400 group-hover:scale-125 transition-transform flex-shrink-0" />
-                    <p className="text-amber-100/80">
-                      Open gaming featuring a curated library of modern board game classics and hidden gems.
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 group">
-                    <div className="mt-1.5 w-2 h-2 rotate-45 bg-purple-400 group-hover:scale-125 transition-transform flex-shrink-0" />
-                    <p className="text-amber-100/80">
-                      A unique mythology-themed challenge with &apos;Charon&apos;s Coin&apos;
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 group">
-                    <div className="mt-1.5 w-2 h-2 rotate-45 bg-cyan-400 group-hover:scale-125 transition-transform flex-shrink-0" />
-                    <p className="text-amber-100/80">
-                      Our trademark Sasquatch-Free Environment™.
-                    </p>
-                  </div>
+                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 font-semibold">
+                  <CalendarDays className="h-5 w-5" />
+                  Coming Soon
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </motion.div>
       </div>

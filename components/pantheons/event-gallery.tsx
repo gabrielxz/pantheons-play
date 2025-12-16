@@ -1,66 +1,55 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X, Calendar } from 'lucide-react'
+import { PAST_EVENTS } from '@/lib/constants'
 
-interface EventPhotos {
-  id: string
-  name: string
-  date: string
-  photos: string[]
+interface EventGalleryProps {
+  selectedEventId?: string | null
 }
 
-const EVENTS: EventPhotos[] = [
-  {
-    id: 'winter-2025',
-    name: 'Winter Event',
-    date: 'December 2025',
-    photos: [
-      // Preferred order
-      '/images/events/winter-2025/optimized/ppWinter9.jpg',
-      '/images/events/winter-2025/optimized/ppWinter2.jpg',
-      '/images/events/winter-2025/optimized/ppWinter13.jpg',
-      '/images/events/winter-2025/optimized/ppWinter15.jpg',
-      '/images/events/winter-2025/optimized/ppWinter17.jpg',
-      '/images/events/winter-2025/optimized/ppWinter18.jpg',
-      '/images/events/winter-2025/optimized/ppWinter5.jpg',
-      '/images/events/winter-2025/optimized/ppWinter7.jpg',
-      // Remaining photos
-      '/images/events/winter-2025/optimized/ppWinter1.jpg',
-      '/images/events/winter-2025/optimized/ppWinter3.jpg',
-      '/images/events/winter-2025/optimized/ppWinter4.jpg',
-      '/images/events/winter-2025/optimized/ppWinter8.jpg',
-      '/images/events/winter-2025/optimized/ppWinter10.jpg',
-      '/images/events/winter-2025/optimized/ppWinter11.jpg',
-      '/images/events/winter-2025/optimized/ppWinter12.jpg',
-      '/images/events/winter-2025/optimized/ppWinter14.jpg',
-      '/images/events/winter-2025/optimized/ppWinter16.jpg',
-      '/images/events/winter-2025/optimized/ppWinter19.jpg',
-    ],
-  },
-]
+export function EventGallery({ selectedEventId }: EventGalleryProps) {
+  // Transform PAST_EVENTS into gallery format
+  const events = useMemo(() =>
+    PAST_EVENTS.map(event => ({
+      ...event,
+      fullPhotos: event.photos.map(photo => `${event.photoFolder}/${photo}`)
+    })),
+    []
+  )
 
-export function EventGallery() {
-  const [selectedEvent, setSelectedEvent] = useState(EVENTS[0])
+  const [selectedEvent, setSelectedEvent] = useState(events[0])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [direction, setDirection] = useState(0)
 
+  // Handle external event selection
+  useEffect(() => {
+    if (selectedEventId) {
+      const event = events.find(e => e.id === selectedEventId)
+      if (event && event.id !== selectedEvent.id) {
+        setSelectedEvent(event)
+        setCurrentIndex(0)
+        setDirection(0)
+      }
+    }
+  }, [selectedEventId, events, selectedEvent.id])
+
   const goToPrevious = useCallback(() => {
     setDirection(-1)
     setCurrentIndex((prev) =>
-      prev === 0 ? selectedEvent.photos.length - 1 : prev - 1
+      prev === 0 ? selectedEvent.fullPhotos.length - 1 : prev - 1
     )
-  }, [selectedEvent.photos.length])
+  }, [selectedEvent.fullPhotos.length])
 
   const goToNext = useCallback(() => {
     setDirection(1)
     setCurrentIndex((prev) =>
-      prev === selectedEvent.photos.length - 1 ? 0 : prev + 1
+      prev === selectedEvent.fullPhotos.length - 1 ? 0 : prev + 1
     )
-  }, [selectedEvent.photos.length])
+  }, [selectedEvent.fullPhotos.length])
 
   const goToIndex = useCallback((index: number) => {
     setDirection(index > currentIndex ? 1 : -1)
@@ -75,7 +64,7 @@ export function EventGallery() {
     setLightboxOpen(false)
   }, [])
 
-  const handleEventChange = useCallback((event: EventPhotos) => {
+  const handleEventChange = useCallback((event: typeof events[0]) => {
     setSelectedEvent(event)
     setCurrentIndex(0)
     setDirection(0)
@@ -96,13 +85,21 @@ export function EventGallery() {
     }),
   }
 
+  if (events.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-slate-400">No event photos yet. Check back after our next event!</p>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="space-y-6">
-        {/* Event Selector - Ready for multiple events */}
-        {EVENTS.length > 1 && (
+        {/* Event Selector - Shows when multiple events */}
+        {events.length > 1 && (
           <div className="flex flex-wrap justify-center gap-3">
-            {EVENTS.map((event) => (
+            {events.map((event) => (
               <button
                 key={event.id}
                 onClick={() => handleEventChange(event)}
@@ -135,7 +132,7 @@ export function EventGallery() {
           >
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
-                key={currentIndex}
+                key={`${selectedEvent.id}-${currentIndex}`}
                 custom={direction}
                 variants={slideVariants}
                 initial="enter"
@@ -145,7 +142,7 @@ export function EventGallery() {
                 className="absolute inset-0"
               >
                 <Image
-                  src={selectedEvent.photos[currentIndex]}
+                  src={selectedEvent.fullPhotos[currentIndex]}
                   alt={`${selectedEvent.name} photo ${currentIndex + 1}`}
                   fill
                   className="object-contain"
@@ -186,14 +183,14 @@ export function EventGallery() {
 
             {/* Photo Counter */}
             <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/60 text-white text-sm font-medium">
-              {currentIndex + 1} / {selectedEvent.photos.length}
+              {currentIndex + 1} / {selectedEvent.fullPhotos.length}
             </div>
           </div>
 
           {/* Thumbnail Strip */}
           <div className="mt-4 max-w-4xl mx-auto">
             <div className="flex gap-2 overflow-x-auto pb-2 px-1 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
-              {selectedEvent.photos.map((photo, index) => (
+              {selectedEvent.fullPhotos.map((photo, index) => (
                 <button
                   key={index}
                   onClick={() => goToIndex(index)}
@@ -262,7 +259,7 @@ export function EventGallery() {
             {/* Image */}
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
-                key={currentIndex}
+                key={`lightbox-${selectedEvent.id}-${currentIndex}`}
                 custom={direction}
                 variants={slideVariants}
                 initial="enter"
@@ -273,7 +270,7 @@ export function EventGallery() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
-                  src={selectedEvent.photos[currentIndex]}
+                  src={selectedEvent.fullPhotos[currentIndex]}
                   alt={`${selectedEvent.name} photo ${currentIndex + 1}`}
                   fill
                   className="object-contain"
@@ -285,7 +282,7 @@ export function EventGallery() {
 
             {/* Counter */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 text-white font-medium">
-              {currentIndex + 1} / {selectedEvent.photos.length}
+              {currentIndex + 1} / {selectedEvent.fullPhotos.length}
             </div>
           </motion.div>
         )}
